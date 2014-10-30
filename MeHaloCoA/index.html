@@ -1,7 +1,132 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>MeHaloCoA web page</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
-</html>
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="MeHaloCoA : R package for Cl & Br detection in LC-MS">
+
+    
+    <link rel="stylesheet" type="text/css" href="stylesheets/download.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>MeHaloCoA</title>
+  <script type="text/javascript">
+        
+        // get the appropiate label for the download button
+        function getDownloadOSLabel(){
+            var label="for all platforms";
+            if (navigator.appVersion.indexOf("Win")!=-1) label="for Windows";
+            if (navigator.appVersion.indexOf("Mac")!=-1) label="for Mac OS X";
+            return label;
+        }
+        
+        // directs to windows or mac specific downloads, defaults to the jar
+        function download(){
+            if (navigator.appVersion.indexOf("Win")!=-1) {
+                window.location.href='MeHaloCoA.zip';
+            }
+            else if (navigator.appVersion.indexOf("Mac")!=-1){
+                window.location.href='MeHaloCoA.tar.gz';
+            } else {             
+                window.location.href='MeHaloCoA.tar.gz';                
+            }
+        }
+        
+        
+    </script></head>
+
+
+    <!-- QTObject embed by Geoff Stearns geoff@deconcept.com http://blog.deconcept.com/ -->
+    
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/yguitton/MeHaloCoA">View on GitHub</a>
+
+          <h1 id="project_title">MeHaloCoA</h1>
+          <h2 id="project_tagline">Halogenated (Cl & Br) compounds search in LC_hrMS</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/yguitton/MeHaloCoA/zipball/master">Download source code as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/yguitton/MeHaloCoA/tarball/master">Download source code as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>MeHaloCoA is an open source R package </p>that fasten the detection of Cl or Br in LC-hrMS data by usingtheir distinct isotpoic profil and their mass defect
+
+<p>Finding Cl or Br containing compounds in LC-MS data is "simple" you just have to see if the isotopic profil match Cl or Br. But making that annotation manually is time consuming. MeHaloCoA simplifies the process of manual annotation providing a higher-quality peak list in less time.</p>
+
+<h5>Download the latest version</h5> 
+<div id="download" onclick="download()">
+                <div id="downloadinfo">
+                    <p>
+                        <b>Download MeHaloCoA</b>
+                        <br>
+                        <span><script type="text/javascript">document.write(getDownloadOSLabel())</script>for Windows</span>
+                        <a href="/MeHaloCoA/download/" title="alternative download options">more</a>
+                        </p>
+                </div>
+            </div>
+
+
+<h5>Acknowledgement</h5>
+
+<p>MeHaloCoA was created by members of the <a href="http://www.sciences.univ-nantes.fr/ThalassOMICS/">ThalassOMICS core facility</a> at the <a href="http://www.univ-nantes.fr/">University of Nantes</a>. The project is funded by <a href="http://www.paysdelaloire.fr/">Région Pays de la Loire</a></p>
+
+<div style="height:100px;">
+<div style="width: 120px; float: left; padding: 20px;"><a href="http://www.univ-nantes.fr/"><img src="images/Université_de_Nantes_(logo).svg" width="100"></a></div>
+<div style="width: 40px; float: left; padding: 20px;"><a href="http://www.sciences.univ-nantes.fr/ThalassOMICS/"><img src="images/thalassomics anim 2.gif" width="100"></a></div>
+<div style="width: 120px; float: left; padding: 20px;"><a href="http://www.paysdelaloire.fr"><img src="images/pdl-logo.jpg" width="100"></a></div>
+<div style="width: 120px; float: left; padding: 20px;"><img src="images/chimimar-logo.png" width="100"></div>
+</div><br>
+
+<h5>Screenshots</h5>
+
+
+
+
+<h5>Key Features</h5>
+
+<h5>Steps</h5>
+
+<p>Step 1:</p>
+
+<ul>
+<li>
+<a href="http://sbml.org/">Systems Biology Markup Language</a> (SBML)</li>
+<li>
+<a href="http://www.kegg.jp/kegg/xml/">KEGG Markup Language</a> (KGML)</li>
+<li>Microsoft ® Excel *</li>
+</ul><p>Include nucleotide and protein sequence information from:</p>
+
+<ul>
+<li>
+<a href="http://www.ebi.ac.uk/ena/">European Nucleotide Archive</a> (ENA)</li>
+<li>
+<a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA</a> format files</li>
+</ul><h5>Metabolite cross-referencing</h5>
+
+
+
+</section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">MeHaloCoA maintained by <a href="https://github.com/yguitton">yguitton</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  
+
+</body></html>

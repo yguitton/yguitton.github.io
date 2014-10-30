@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="MeHaloCoA : R package for Cl & Br detection in LC-MS">
 
-    
+    <link rel="stylesheet" type="text/css" href="stylesheets/bubble.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/download.css">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -46,7 +46,7 @@
           <a id="forkme_banner" href="https://github.com/yguitton/MeHaloCoA">View on GitHub</a>
 
           <h1 id="project_title">MeHaloCoA</h1>
-          <h2 id="project_tagline">Halogenated (Cl & Br) compounds search in LC_hrMS</h2>
+          <h2 id="project_tagline">Halogenated (Cl & Br) containing compounds search in LC-hrMS</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/yguitton/MeHaloCoA/zipball/master">Download source code as a .zip file</a>
@@ -57,10 +57,28 @@
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
+	
       <section id="main_content" class="inner">
-        <p>MeHaloCoA is an open source R package </p>that fasten the detection of Cl or Br in LC-hrMS data by using their distinct isotpoic profil and their mass defect
+        <p><strong>MeHaloCoA</strong> is an open source R package that fasten the detection of Cl or Br containing compounds in LC-hrMS data 
+		by using their distinct isotopic profile and their <span title="relative isotopic mass defect, which is the mass defect between the monoisotopic
+mass of an element and the mass of its A+1 or its A+2 isotopic cluster."><em>mass defect</em></span>.</p>
 
-<p>Finding Cl or Br containing compounds in LC-MS data is "simple" you just have to see if the isotopic profil match Cl or Br. But making that annotation manually is time consuming. MeHaloCoA simplifies the process of manual annotation providing a higher-quality peak list in less time.</p>
+<div style=" height:250px; ">
+	<div style=" width:350px; height:50px;margin: 30px; padding: 2px;" class="bubble">  &nbsp;Boss says: "Finding Cl or Br containing compounds in &nbsp;LC-MS data is simple you can see it on the PC screen"</div>
+	
+	<div> <img style="width: 40px;  margin:20px;float:left; border=0; padding: 20px;" src="images/chemicus18.gif" width="40"><p>&nbsp;&nbsp;Finding Cl or Br containing compounds in LC-MS data is not that "simple". I do agree any undergrad student can recognize by eye
+	the distinct isotopic profile of Cl or Br containing compounds.
+ But making that annotation manually is time consuming and prone to errors (<em>e.g</em> missing of small intensity ions). MeHaloCoA simplifies the process of manual
+ annotation providing a higher-quality peak list in less time.</p></div>
+</div>
+
+	
+
+
+
+
+
+
 
 <h5>Download the latest version</h5> 
 <div id="download" onclick="download()">
@@ -80,15 +98,15 @@
 <p>MeHaloCoA was created by members of the <a href="http://www.sciences.univ-nantes.fr/ThalassOMICS/">ThalassOMICS core facility</a> at the <a href="http://www.univ-nantes.fr/">University of Nantes</a>. The project is funded by <a href="http://www.paysdelaloire.fr/">Région Pays de la Loire</a></p>
 
 <div style="height:100px;">
-<div style="width: 120px; float: left; padding: 20px;"><a href="http://www.univ-nantes.fr/"><img src="images/Université_de_Nantes_(logo).svg" width="100"></a></div>
-<div style="width: 40px; float: left; padding: 20px;"><a href="http://www.sciences.univ-nantes.fr/ThalassOMICS/"><img src="images/thalassomics anim 2.gif" width="100"></a></div>
-<div style="width: 120px; float: left; padding: 20px;"><a href="http://www.paysdelaloire.fr"><img src="images/pdl-logo.jpg" width="100"></a></div>
-<div style="width: 120px; float: left; padding: 20px;"><img src="images/chimimar-logo.png" width="100"></div>
-</div><br>
+	<div style="width: 100px; float: left; padding: 10px;"><a href="http://www.univ-nantes.fr/"><img src="images/Université_de_Nantes_(logo).svg" width="100"></a></div>
+	<div style="width: 140px; float: left; padding: 10px;"><a href="http://www.sciences.univ-nantes.fr/ThalassOMICS/"><img src="images/thalassomics anim 2.gif" width="140"></a></div>
+	<div style="width: 140px; float: left; padding: 10px;"><a href="http://www.paysdelaloire.fr"><img src="images/pdl-logo.jpg" width="140"></a></div>
+	<div style="width: 120px; float: left; padding: 10px;"><img src="images/chimimar-logo.png" width="100"></div>
+</div>
+<br></br>
+
 
 <h5>Screenshots</h5>
-
-
 
 
 <h5>Key Features</h5>
@@ -99,21 +117,15 @@
 
 <ul>
 <li>
-<a href="http://sbml.org/">Systems Biology Markup Language</a> (SBML)</li>
+<a href="http://sbml.org/">step1</a> (first step)</li>
 <li>
-<a href="http://www.kegg.jp/kegg/xml/">KEGG Markup Language</a> (KGML)</li>
-<li>Microsoft ® Excel *</li>
-</ul><p>Include nucleotide and protein sequence information from:</p>
+<a href="http://sbml.org/">step1</a> (first step)</li>
+<li>test</li>
+</ul><p>Include all xcms preprocessing</p>
 
-<ul>
-<li>
-<a href="http://www.ebi.ac.uk/ena/">European Nucleotide Archive</a> (ENA)</li>
-<li>
-<a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA</a> format files</li>
-</ul><h5>Metabolite cross-referencing</h5>
+<h5>Projects</h5>
 
-
-
+<p>Step 1:</p>
 </section>
     </div>
 

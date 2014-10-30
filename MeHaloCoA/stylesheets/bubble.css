@@ -1,0 +1,42 @@
+  .bubble {
+    position: relative;
+    width: 274px;
+    height: 100px;
+    padding: 0px;
+    background: -webkit-linear-gradient(90deg, #ADB400 5%, #E3EB00 100%);
+    background: -moz-linear-gradient(90deg, #ADB400 5%, #E3EB00 100%);
+    background: -ms-linear-gradient(90deg, #ADB400 5%, #E3EB00 100%);
+    background: linear-gradient(180deg, #E3EB00 5%, #ADB400 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E3EB00', endColorstr='#ADB400');
+    border: #000000 solid 1px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+  .bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -47px;
+    left: 33px;
+    border-style: solid;
+    border-width: 47px 8px 0;
+    border-color: #ADB400 transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+  .bubble:before {
+    content: "";
+    position: absolute;
+    top: 101px;
+    left: 33px;
+    border-style: solid;
+    border-width: 47px 8px 0;
+    border-color: #000000 transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+}
+

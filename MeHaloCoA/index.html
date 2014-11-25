@@ -64,9 +64,9 @@
 mass of an element and the mass of its A+1 or its A+2 isotopic cluster."><em>mass defect</em></span>.</p>
 
 <div style=" height:250px; ">
-	<div style=" width:350px; height:50px;margin: 30px; padding: 2px;" class="bubble">  &nbsp;Boss says: "Finding Cl or Br containing compounds in &nbsp;LC-MS data is simple you can see it on the PC screen"</div>
+	<div style=" width:350px; height:50px;margin: 5px; padding: 2px;" class="bubble">  &nbsp;Boss says: "Finding Cl or Br containing compounds in &nbsp;LC-MS data is simple you can see it on the PC screen"</div>
 	
-	<div> <img style="width: 40px;  margin:20px;float:left; border=0; padding: 20px;" src="images/chemicus18.gif" width="40"><p>&nbsp;&nbsp;Finding Cl or Br containing compounds in LC-MS data is not that "simple". I do agree any undergrad student can recognize by eye
+	<div> <img style="width: 55px;  margin:10px;float:left; border: 0px; padding: 10px;" src="images/chemicus18.gif"><p>&nbsp;&nbsp;Finding Cl or Br containing compounds in LC-MS data is not that "simple". I do agree any undergrad student can recognize by eye
 	the distinct isotopic profile of Cl or Br containing compounds.
  But making that annotation manually is time consuming and prone to errors (<em>e.g</em> missing of small intensity ions). MeHaloCoA simplifies the process of manual
  annotation providing a higher-quality peak list in less time.</p></div>
@@ -124,6 +124,16 @@ A <a href="http://galaxyproject.org/" target="_blank"> Galaxy </a> implementatio
 
 </ul><p>*Include all xcms preprocessing</p>
 <h5>Outputs</h5>
+<ul>
+<li>
+Isotope Filtered Chromatogram (IFC)</li>
+<div style="width: 300px; float: center; padding: 10px;"><img src="images/IFC.png"" width="400"></div>
+<li>
+Extracted Ion Chromatogram's (EICs) & mass spectra for each peak</li>
+<div style="width: 300px; float: center; padding: 10px;"><img src="images/pspectra_pc1.JPG"" width="400"></div>
+<li>
+Table file (halo_list.csv) with all detected peaks informations [RT, m/z, Chlorinated (TRUE/FALSE), Brominated(TRUE/FALSE)]</li>
+</ul>
 <h5>Tests data</h5>
 <a href="">Here</a> you can find LC-hrMS data for testing.
 <p>A sample LC-hrMS file is available in the R package</p>

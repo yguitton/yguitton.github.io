@@ -1,0 +1,212 @@
+<tool id="corsaire_mehalocoa_cldetect" name="mehalocoa.cldetect" version="20141204">
+    <!-- Yann GUITTON version 20141204 ThalassOMICS core facility from Corsaire plateforme-->
+    <requirements>
+        <requirement type="binary">Rscript</requirement>
+    </requirements>
+    
+    <description>Detection of Chlorine/Bromine containing compounds in high resolution LC-MS data. Step2: Cl/Br detection </description>
+    
+    <command interpreter="Rscript">
+        mehalocoa.r xfunction cldetect image $image 
+		m1 $m1 
+		m2 $m2 
+		seuil $seuil
+	    #if $options.option == "show":
+			plotps $options.plotps
+			mdiff $options.mdiff
+			ppmerr $options.ppmerr
+			m1need $options.m1need
+			val "$options.val"
+			deprof $options.deprof
+			mdiff2 $options.mdiff2
+			
+        #end if
+        
+		
+</command>
+    
+    <inputs>
+        <param name="image" type="data" format="rdata" label="CDF2RData RData file" help="output file from another function mehalocoa (CDF2RData)" />
+		<param name="m1" type="float" value="1.003" label="m1" help="mass defect between M and M+1 isotope (here 1.0033)"/>
+		<param name="m2" type="float" value="1.997" label="m2" help="mass defect between M and M+2 isotope (here 1.997 for Cl, 1,998 for Br)"/>
+		<param name="seuil" type="integer" value="20" label="seuil" help="threshold of intensity for M+2 here 20 by default (seuil in french means threshold)" />
+		<conditional name="options">
+            <param name="option" type="select" label="Advanced options">
+                <option value="show">show</option>  
+                <option value="hide" selected="true">hide</option>
+            </param>
+            <when value="show">
+                  <param name="plotps" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="plotps" help="Draw nice Isotopic Filtered Chromatogram (IFC)" />
+				  <param name="mdiff" type="float" value="0.05" label="mdiff" help="mdiff differences in Da applied to neutral loss search" />
+				  <param name="ppmerr" type="integer" value="50" label="ppmerr" help="ppm margin tolerated by cldetect " />
+				  <param name="m1need" type="boolean" checked="true" truevalue="TRUE" falsevalue="FALSE" label="m1need" help="Should M+1 isotope be present? if FALSE peaks with no M+1 are considered (interesting for low intensity compounds)" />
+				  <param name="val" type="select" label="val" help="intensity values to be used for intensity or area respectively">
+						<option value="into" selected="true">into</option>
+						<option value="maxo" >maxo</option>
+                  </param>
+				  <param name="deprof" type="boolean" checked="false" truevalue="TRUE" falsevalue="FALSE" label="deprof" help="default=FALSE if TRUE deprofile.scan from RMassBank is applied on each pspectra" />
+				  <param name="mdiff2" type="float" value="0.001" label="mdiff2" help="mdiff2 differences in Da applied to IFC (Isotope Filtered Chromatogram) drawing" />
+<!--	just here forcompleteness BUT Please do not uncomment as default files names are used for zip creation in mehalocoa.r			 
+				 <param name="myfile" type="text" size="40" label="myfile" help="name of the output file default halo_list.csv" />
+				  <param name="myfile2" type="text" size="40" label="myfile" help="name of the output file default halo_list_short.csv is a resume from all individual myfile\n in the case off several files have been processed" />
+-->				  
+			</when>
+        </conditional>
+			
+	
+	
+	
+
+    </inputs>
+    
+    <outputs>
+        <data name="cldetectRData" format="rdata" from_work_dir="cldetect.RData" label="cldetect.RData" />
+        <data name="log" format="txt" from_work_dir="cdf2rdata.log" label="${image.name[:-6]}.cldetect.log.txt" />
+		<data name="zip" format="zip"   from_work_dir="cldetect.zip"   label="cldetect.zip" />
+		<data name="IFCPdf"   format="pdf"   from_work_dir="IFC001.pdf"  label="cldetect_IFC.pdf" />
+		<data name="HALOlist"   format="tabular"   from_work_dir="halo_list.tsv"  label="halo_list.tsv" />
+		<data name="HALOlistshort"   format="tabular"   from_work_dir="halo_list_short.csv"  label="halo_short_list.tsv" />
+	</outputs>
+    
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    
+    <tests>
+    </tests>
+    
+    <help>
+		
+		
+.. class:: infomark
+
+**Author(s)**  Guitton Yann for ThalassOMICS core Facility. yann.guitton@irisa.fr
+
+**References** MeHaloCoA : Halogenated compound detection in high resolution LC-MS data submitted to Bioinformatics
+			   metaMS : Wehrens, R.; Weingart, G.; Mattivi, F. Journal of Chromatography B.
+			   xcms :   Smith, C. A.; Want, E. J.; O’Maille, G.; Abagyan, R.; Siuzdak, G. Anal. Chem. 2006, 78, 779–787.
+			   CAMERA :	Kuhl, C.; Tautenhahn, R.; Böttcher, C.; Larson, T. R.; Neumann, S. Analytical Chemistry 2012, 84, 283–289.
+
+
+---------------------------------------------------
+
+===================
+MeHaloCoA.cldetect
+===================
+
+-----------
+Description
+-----------
+The MeHaloCoA project (Marine HAlogenated COmpound Analysis) aim was to unsuperviselly detect Cl or Br containing compounds in data from high resolution LC-MS platforms (LC-hrMS) in order to prospect
+either for known halogenated compounds and for original ones. The R package created was also included in the Galaxy environment. R code is mainly based on xcms/CAMERA and makes use of script designed by Ron Wehrens in metaMS package.
+
+This tool is used for preprocessing analysis data from multiple LC/MS files (formats NetCDF, mzXML and mzData). It extracts ion from each sample independently and using a statistic model, peaks are filtered and integrated.
+
+-----------------
+Workflow position
+-----------------
+
+**Upstream tools**
+
+====================== ================== ======== =========
+Name                   output file        format   parameter
+====================== ================== ======== =========
+MeHaloCoA.CDF2RData    CDF2RData.RData	  RData	   NA       
+====================== ================== ======== =========
+
+
+or the following workflow
+
++----------------------+-----------------+--------+-----------+
+| Name                 | Output file     | Format | Parameter |
++======================+=================+========+===========+
+| 1: xcms.xcmsSet      | xset.RData      | RData  |NA         |
++----------------------+-----------------+--------+-----------+
+| 2: CAMERA.xsAnnotate | xsA.RData       | RData  |NA         |
++----------------------+-----------------+--------+-----------+
+| 3: CAMERA.groupFWHM  | groupFWHM.RData | RData  |NA         |
++----------------------+-----------------+--------+-----------+
+
+
+**Downstream tools**
+
++---------+--------------+--------+
+| Name    | Output file  | Format |
++=========+==============+========+
+| NA      | NA           | NA     |
++---------+--------------+--------+
+
+
+------
+
+.. class:: infomark 
+
+The output file is an cldetect.RData file. You can continue your analysis on your computer
+
+---------------------------------------------------
+
+-----------
+Input files
+-----------
+
++---------------------------+------------+
+| Parameter : num + label   | Format     |
++===========================+============+
+| 1 : CDF2RData.RData       | RData      |
++---------------------------+------------+
+
+
+
+----------
+Parameters
+----------
+
+The second Step of MeHaloCoA is the Cl or Br detection step
+
+
+
+------------
+Output files
+------------
+
+cldetect.RData
+	| Rdata file that is necessary if you want to launch other R data analysis on your computer
+	
+------
+
+.. class:: infomark 
+
+The output file is an cldetect.RData file. You can continue your analysis on your computer by downloading the zip file
+
+---------------------------------------------------
+
+---------------
+Working example
+---------------
+
+Input files
+-----------
+
+	| **CDF2RData.RData**
+
+Parameters
+----------
+
+All default
+
+
+Output files
+------------
+
+	| **1) IFC.pdf: PDF file**
+	| **2) halo_list.tsv (and halo_short_list.tsv empty if only 1 mzML file treated) : tsv file**
+	| 3) cldetect.RData: RData file
+	| 4) cldetect.zip: zip file
+	| 5) log.txt: log file
+
+
+
+
+   </help>
+
+</tool>

@@ -1,0 +1,284 @@
+<tool id="corsaire_mehalocoa_CDF2RData" name="mehalocoa.CDF2RData" version="20141204">
+    <!-- Yann GUITTON version 20141204 ThalassOMICS core facility from Corsaire plateforme-->
+    <requirements>
+        <requirement type="binary">Rscript</requirement>
+    </requirements>
+    
+    <description>Detection of Chlorine/Bromine containing compounds in high resolution LC-MS data. Step1: Peakpicking </description>
+    
+    <command interpreter="Rscript">
+        mehalocoa.r	library /projet/sbr/galaxy/import/user/$__user_email__/$library xfunction CDF2RData
+        perfwhm $perfwhm
+        nSlaves \${GALAXY_SLOTS:-1} method $methods.method 
+        #if $methods.method == "centWave":
+            ppm $methods.ppm
+            peakwidth "c($methods.peakwidth)"
+            ##if $methods.options_scanrange.option == "show":
+            	##scanrange "c($methods.options_scanrange.scanrange)"
+            ##end if 
+            #if $methods.options_c.option == "show":
+                mzdiff $methods.options_c.mzdiff
+                snthresh $methods.options_c.snthresh
+				profmethod $methods.options_c.profmethod 
+                integrate $methods.options_c.integrate
+                noise $methods.options_c.noise
+                prefilter "c($methods.options_c.prefilter)"
+            #end if
+        #elif $methods.method == "matchedFilter":
+            step $methods.step
+            fwhm $methods.fwhm
+            #if $methods.options_m.option == "show":
+                ## sigma "$methods.options_m.sigma"
+                max $methods.options_m.max
+				profmethod $methods.options_m.profmethod 
+                snthresh $methods.options_m.snthresh
+                mzdiff $methods.options_m.mzdiff
+                steps $methods.options_m.steps
+                ## sleep $methods.options_m.sleep
+            #end if
+        #elif $methods.method == "MSW":
+            snthr $methods.snthr
+            nearbyPeak $methods.nearbyPeak
+            winSize.noise $methods.winSize_noise
+            amp.Th $methods.amp_Th
+            scales "c($methods.scales)"
+            SNR_method "$methods.SNR_method "
+        #end if
+		
+</command>
+    
+    <inputs>
+        <param name="library" type="text" size="40" label="Library directory name" help="The name of your directory containing all your data" />
+
+       
+<!--
+        <param name="nSlaves" type="integer" value="9" label="MPI-slaves CPU" help="number of MPI-slaves to use for parallel peak detection" />
+-->
+	<conditional name="methods">
+            <param name="method" type="select" label="Method" help="Choose the method used for finding peaks" >
+                <option value="centWave" >centWave</option>
+                <option value="matchedFilter" selected="true">matchedFilter</option>
+                <option value="MSW">MSW</option>
+            </param>
+            <when value="centWave">
+                <param name="ppm" type="integer" value="15" label="ppm" help="max tolerated ppm deviation in consecutive scans" />
+                <param name="peakwidth" type="text" value="8,25" label="peakwidth" help="min peak width in seconds, max peak width in seconds" />
+                <!-- 
+                <conditional name="options_scanrange">
+			<param name="option" type="select" label="Scan range option " >
+				<option value="show">show</option>
+				<option value="hide" selected="true">hide</option>
+			</param>
+			<when value="show">
+				<param name="scanrange" type="text" value="" label="scanrange" help="scan range to process, for example (16,365)" />
+			</when>
+		</conditional>
+                -->
+                <conditional name="options_c">
+                    <param name="option" type="select" label="Advanced options" >
+                        <option value="show">show</option>
+                        <option value="hide" selected="true">hide</option>
+                    </param>
+                    <when value="show">
+                        <param name="snthresh" type="integer" value="3" label="Signal/Noise threshold" help="signal to noise ratio cutoff" />
+                        <param name="mzdiff" type="float" value="0.005" label="m/z difference" help="min m/z difference for peaks with overlapping RT " />
+                         <param name="profmethod" type="select" label="Advanced : Method to use for profile generation (profmethod)" >
+							<option value="binlinbase" selected="true">binlinbase</option>
+							<option value="binlin">binlin</option>
+							<option value="bin">bin</option>
+							<option value="intlin">intlin</option>
+						</param>
+						<param name="integrate" type="select" label="peak limits method" help="1 - peak limits based on smoothed 2nd derivative (less precise)  2 - peak limits based on real data (more sensitive to noise)" >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </param>
+                        <param name="prefilter" type="text" value="3,0" label="prefilter" help="Prefilter step for the first phase. Separate by coma k,I. Mass traces are only retained if they contain at least ‘k’ peaks with intensity >= ‘I’"/>
+                        <param name="noise" type="integer" value="10000" label="noise filter" help="optional argument which is useful for data that was centroided without any intensity threshold, centroids with intensity smaller than ‘noise’ are omitted from ROI detection"/>
+                    </when>
+                </conditional>
+            </when>
+            <when value="matchedFilter">
+                <param name="step" type="float" value="0.1" label="step" help="the peak detection algorithm creates extracted ion base peak chromatograms (EIBPC) on a fixed step size defined by the step argument" />
+                <param name="fwhm" type="integer" value="12" label="fwhm" help="full width at half maximum" />
+			
+                
+
+                <conditional name="options_m">
+                    <param name="option" type="select" label="Advanced options" >
+                        <option value="show">show</option>
+                        <option value="hide" selected="true">hide</option>
+                    </param>
+                    <when value="show">
+<!--
+                        <param name="sigma" type="hidden" value="fwhm/2.3548" label="sigma" help="standard deviation (fwhm/2.3548)" />
+-->
+						 <param name="mzdiff" type="text" size="20" value="0.05" label="m/z difference" help="min m/z difference for peaks with overlapping RT " />
+						 <param name="profmethod" type="select" label="Advanced : Method to use for profile generation (profmethod)" >
+							<option value="binlinbase" selected="true">binlinbase</option>
+							<option value="binlin">binlin</option>
+							<option value="bin">bin</option>
+							<option value="intlin">intlin</option>
+						</param>
+                        <param name="max" type="integer" value="50" label="max" help="maximum number of peaks per extracted ion chromatogram" />
+                        <param name="snthresh" type="integer" value="3" label="snthresh" help="signal to noise ratio cutoff" />
+                        <param name="steps" type="integer" value="2" label="steps" help="the peak identification algorithm combines a given number of EIBPCs prior to filtration and peak detection, as defined by the steps argument" />
+
+                    </when>
+                </conditional>
+            </when>
+            <when value="MSW">
+                <param name="nearbyPeak" type="select" label="nearbyPeak" help="determine whether to include the nearby small peaks of major peaks" >
+                    <option value="TRUE">TRUE</option>
+                    <option value="FALSE">FALSE</option>
+                </param>
+                <param name="winSize_noise" type="integer" value="500" label="winSize.noise" help="The local window size to estimate the noise level" />
+                <param name="snthr" type="integer" value="3" label="snthr" help="SNR (Signal to Noise Ratio) threshold" />
+                <param name="amp_Th" type="float" value="0.002" label="amp.Th" help="the minimum required relative amplitude of the peak (ratio to the maximum of CWT coefficients)" />
+                <param name="scales" type="text" value="seq(1,22,3)" label="scales" help="Scales for the Continuous Wavelet Transform (CWT). Scales are linked to the width of the peaks that are to be detected. Tape as indicaded seq('n,n,n') or c(n,n) : seq(from, to, by steps), c - linear vector " />
+                <param name="SNR_method" type="text" value="data.mean" label="SNR method" help="Method to estimate noise level. Currently, only 95 percentage quantile is supported." />
+            </when>
+        </conditional>
+		 <param name="perfwhm" type="float" value="1" label="perfwhm" help="from CAMERA package percentage of FWHM for ion grouping into pcgroup (deconvolution)" />
+    </inputs>
+    
+    <outputs>
+        <data name="cdf2rdataRData" format="rdata" from_work_dir="CDF2RData.RData" label="cdf2rdata.RData" />
+        <data name="log" format="txt" from_work_dir="cdf2rdata.log" label="cdf2rdata.log.txt" />
+		<data name="zip" format="zip"   from_work_dir="cdf2rdata.zip"   label="cdf2rdata.zip" />
+    </outputs>
+    
+    <stdio>
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    
+    <tests>
+    </tests>
+    
+    <help>
+		
+		
+.. class:: infomark
+
+**Author(s)**  Guitton Yann for ThalassOMICS core Facility. yann.guitton@irisa.fr
+
+**References** MeHaloCoA : Halogenated compound detection in high resolution LC-MS data submitted to Bioinformatics
+			   metaMS : Wehrens, R.; Weingart, G.; Mattivi, F. Journal of Chromatography B.
+			   xcms :   Smith, C. A.; Want, E. J.; O’Maille, G.; Abagyan, R.; Siuzdak, G. Anal. Chem. 2006, 78, 779–787.
+			   CAMERA :	Kuhl, C.; Tautenhahn, R.; Böttcher, C.; Larson, T. R.; Neumann, S. Analytical Chemistry 2012, 84, 283–289.
+
+
+---------------------------------------------------
+
+====================
+MeHaloCoA.CDF2RData
+====================
+
+------------
+Description
+------------
+The MeHaloCoA project (Marine HAlogenated COmpound Analysis) aim was to unsuperviselly detect Cl or Br containing compounds in data from high resolution LC-MS platforms (LC-hrMS) in order to prospect
+either for known halogenated compounds and for original ones. The R package created was also included in the Galaxy environment. R code is mainly based on xcms/CAMERA and makes use of script designed by Ron Wehrens in metaMS package.
+
+This tool is used for preprocessing analysis data from multiple LC/MS files (formats NetCDF, mzXML and mzData). It extracts ion from each sample independently and using a statistic model, peaks are filtered and integrated.
+
+**Library directory name**
+
+You must specify the name of your "library" (folder) created within your space project (for example: /projet/externe/institut/login/galaxylibrary/yourlibrary). Your library 
+must contain all your conditions as sub-directories.
+
+------------------
+Workflow position
+------------------
+
+**Upstream tools**
+
+
+========================= ================= ======= =========
+Name                      output file       format  parameter
+========================= ================= ======= =========
+NA                        NA                NA      NA		 
+========================= ================= ======= =========
+
+
+
+
+**Downstream tools**
+
+
+=================== ============ =========
+Name                Output file  Format   
+=================== ============ =========
+MeHaloCoA.cldetect  several		 NA       
+=================== ============ =========
+
+
+
+------
+
+.. class:: infomark 
+
+The output file is an CDF2RData.RData file. You can continue your analysis on Galaxy with MeHaloCoA.cldetect
+
+---------------------------------------------------
+
+
+
+-----------
+Input files
+-----------
+
+================ =======================
+Parameter        Format     		  
+================ =======================
+1 LC-hrMS file   mzML,mzXML,mzData, CDF 
+================ =======================
+
+----------
+Parameters
+----------
+
+The first Step of MeHaloCoA is the peakpicking step
+
+
+------------
+Output files
+------------
+
+CDF2RData.RData
+	| Rdata file that is necessary if you want to launch the second step MeHaloCoA.cldetect
+	
+------
+
+.. class:: infomark 
+
+The output file is an CDF2RData.RData file.
+
+---------------------------------------------------
+
+---------------
+Working example
+---------------
+
+Input files
+-----------
+
+	| **Q-ToF.mzData**
+
+Parameters
+----------
+
+All by default
+
+Output files
+------------
+
+	| **1) cdf2rdata.RData: RData file** 
+	| 2) log.txt: log file
+	| 3) cdf2rdata.zip: zip file
+
+.. class:: infomark 
+
+The output file is an cdf2rdata.RData file. is NEEDED for MeHaloCoA.cldetect
+   </help>
+
+</tool>
